@@ -1,23 +1,6 @@
 import { Product } from '@/types/product'
 import { api } from './api'
-
-type SortBy = {
-  sortField: string
-  sortOrder: string
-}
-
-type ListAllParameters = {
-  page?: number
-  limit?: number
-  filter?: string
-  sort?: SortBy
-}
-
-type ReponseListAll = {
-  data: {
-    allProducts: Product[]
-  }
-}
+import { ListAllParameters, ReponseListAll, ReponseTotalProduct } from './types'
 
 export const ProductService = {
   listAll: async ({
@@ -33,8 +16,6 @@ export const ProductService = {
       sort?.sortField === '' && !sort?.sortOrder
         ? ''
         : `, sortField: "${sort?.sortField}", sortOrder: "${sort?.sortOrder}"`
-
-    console.log(filterProduct)
 
     const response = await api<ReponseListAll>('/', {
       method: 'POST',
@@ -57,5 +38,26 @@ export const ProductService = {
     })
 
     return response?.data?.allProducts
+  },
+  totalProducts: async ({ filter }: { filter?: string }) => {
+    const filterProduct = filter !== '' ? `category: "${filter}"` : ''
+
+    const response = await api<ReponseTotalProduct>('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
+        query {
+          _allProductsMeta(filter: {${filterProduct}}) {
+            count
+          }
+        }
+          `,
+      }),
+    })
+
+    return response?.data?._allProductsMeta?.count
   },
 }

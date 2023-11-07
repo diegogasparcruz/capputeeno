@@ -9,7 +9,7 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div className="w-64 rounded-bl-[0.25rem] rounded-br-[0.25rem] rounded-tl-lg rounded-tr-lg bg-white backdrop-blur">
+    <div className="max-w-64 w-full rounded-bl-[0.25rem] rounded-br-[0.25rem] rounded-tl-lg rounded-tr-lg bg-white backdrop-blur">
       <div className="w-full">
         <Image
           src={product.image_url}

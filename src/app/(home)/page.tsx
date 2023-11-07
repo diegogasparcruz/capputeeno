@@ -11,7 +11,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const filter =
     typeof searchParams.filter === 'string' ? searchParams?.filter : ''
   const page =
-    typeof searchParams.page === 'string' ? Number(searchParams.page) : 1
+    typeof searchParams.page === 'string' ? Number(searchParams?.page) : 1
   const sortField =
     typeof searchParams.sortField === 'string' ? searchParams?.sortField : ''
   const sortOrder =
@@ -23,13 +23,18 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     sort: { sortField, sortOrder },
   })
 
+  const totalProducts = await ProductService.totalProducts({
+    filter: filter === 'all' || !filter ? '' : filter,
+  })
+
   return (
     <div className="flex h-full flex-col gap-5">
       <div className="flex items-start justify-between pt-8">
         <Filter filter={filter} />
         <SortBy />
       </div>
-      <ProductsList products={products} />
+
+      <ProductsList products={products} totalProducts={totalProducts} />
     </div>
   )
 }
