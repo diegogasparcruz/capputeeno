@@ -1,10 +1,16 @@
 import { Product } from '@/types/product'
 import { api } from './api'
 
+type SortBy = {
+  sortField: string
+  sortOrder: string
+}
+
 type ListAllParameters = {
   page?: number
   limit?: number
   filter?: string
+  sort?: SortBy
 }
 
 type ReponseListAll = {
@@ -18,9 +24,15 @@ export const ProductService = {
     page = 1,
     limit = 12,
     filter,
+    sort,
   }: ListAllParameters): Promise<Product[]> => {
     const filterProduct =
       filter !== '' ? `, filter: { category: "${filter}" }` : ''
+
+    const sortBy =
+      sort?.sortField === '' && !sort?.sortOrder
+        ? ''
+        : `, sortField: "${sort?.sortField}", sortOrder: "${sort?.sortOrder}"`
 
     console.log(filterProduct)
 
@@ -32,7 +44,7 @@ export const ProductService = {
       body: JSON.stringify({
         query: `
           query {
-            allProducts(page: ${page}, perPage: ${limit} ${filterProduct}) {
+            allProducts(page: ${page}, perPage: ${limit} ${filterProduct} ${sortBy}) {
               id
               name
               description
