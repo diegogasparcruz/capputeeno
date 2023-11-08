@@ -2,6 +2,7 @@ import { Separator } from '@/components/ui/separator'
 import { Product } from '@/types/product'
 import { formatCurrencyPtBr } from '@/utils/format-currency'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type ProductItemProps = {
   product: Product
@@ -9,7 +10,10 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div className="max-w-64 w-full rounded-bl-[0.25rem] rounded-br-[0.25rem] rounded-tl-lg rounded-tr-lg bg-white backdrop-blur">
+    <Link
+      href={`/product/${product.id}`}
+      className="max-w-64 w-full rounded-bl-[0.25rem] rounded-br-[0.25rem] rounded-tl-lg rounded-tr-lg bg-white backdrop-blur"
+    >
       <div className="w-full">
         <Image
           src={product.image_url}
@@ -31,6 +35,6 @@ export const ProductItem = ({ product }: ProductItemProps) => {
           {formatCurrencyPtBr(product.price_in_cents / 100)}
         </span>
       </div>
-    </div>
+    </Link>
   )
 }

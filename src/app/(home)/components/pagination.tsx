@@ -1,6 +1,6 @@
+import { ArrowLeft, ArrowRight } from '@/components/icons'
 import { DOTS, usePagination } from '@/hooks/usePagination'
 import { Pagination as PaginationType } from '@/types/pagination'
-import Image from 'next/image'
 import { useEffect } from 'react'
 
 type PaginationProps = {
@@ -68,13 +68,9 @@ export const Pagination = ({
         onClick={onPrevious}
         disabled={currentPage === 1}
       >
-        <Image
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E9E9F0] text-base font-normal text-[#737380]"
-          src="/images/svg/arrow-left.svg"
-          width={24}
-          height={24}
-          alt="Ícone de seta para esquerda"
-        />
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E9E9F0] text-base font-normal text-[#737380]">
+          <ArrowLeft />
+        </span>
       </button>
 
       <button
@@ -82,13 +78,9 @@ export const Pagination = ({
         onClick={onNext}
         disabled={currentPage === lastPage || totalCount <= 1}
       >
-        <Image
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E9E9F0] text-base font-normal text-[#737380]"
-          src="/images/svg/arrow-right.svg"
-          width={24}
-          height={24}
-          alt="Ícone de seta para esquerda"
-        />
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E9E9F0] text-base font-normal text-[#737380]">
+          <ArrowRight />
+        </span>
       </button>
     </div>
   )

@@ -25,3 +25,9 @@ export type ReponseTotalProduct = {
     }
   }
 }
+
+export type ResponseGetProduct = {
+  data: {
+    Product: Product
+  }
+}

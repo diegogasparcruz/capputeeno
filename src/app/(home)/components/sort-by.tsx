@@ -1,7 +1,7 @@
 'use client'
+import { ArrowDown } from '@/components/icons'
 import { useCreateQueryString } from '@/hooks/useCreateQueryString'
 import { useOutsideClick } from '@/hooks/useOutsideClicks'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -20,12 +20,7 @@ export const SortBy = () => {
     <div ref={ref} className="relative cursor-pointer" onClick={toggle}>
       <button className="flex gap-2 text-[#737380]">
         Organizar por
-        <Image
-          src="/images/svg/arrow-down.svg"
-          width={24}
-          height={24}
-          alt="Ícone de seta para baixo"
-        />
+        <ArrowDown />
       </button>
 
       {isOpen && (

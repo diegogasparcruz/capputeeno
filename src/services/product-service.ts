@@ -1,6 +1,11 @@
 import { Product } from '@/types/product'
 import { api } from './api'
-import { ListAllParameters, ReponseListAll, ReponseTotalProduct } from './types'
+import {
+  ListAllParameters,
+  ReponseListAll,
+  ReponseTotalProduct,
+  ResponseGetProduct,
+} from './types'
 
 export const ProductService = {
   listAll: async ({
@@ -28,9 +33,12 @@ export const ProductService = {
             allProducts(page: ${page}, perPage: ${limit} ${filterProduct} ${sortBy}) {
               id
               name
+              category
               description
-              price_in_cents
               image_url
+              price_in_cents
+              sales
+              created_at
             }
           }
           `,
@@ -59,5 +67,29 @@ export const ProductService = {
     })
 
     return response?.data?._allProductsMeta?.count
+  },
+  getProduct: async (id: string) => {
+    const response = await api<ResponseGetProduct>('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `
+          query {
+            Product(id: "${id}") {
+              id
+              name
+              category
+              description
+              image_url
+              price_in_cents
+            }
+          }
+          `,
+      }),
+    })
+
+    return response.data.Product
   },
 }
